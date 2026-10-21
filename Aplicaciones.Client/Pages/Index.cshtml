@@ -1,0 +1,30 @@
+@page
+@{
+    ViewData["Title"] = "TicTacToe en linea";
+}
+
+<h1>TicTacToe en linea</h1>
+<p>Abre esta pagina en dos computadoras. Usa el mismo identificador, con un jugador X y otro O.</p>
+
+<section class="controles">
+    <label for="partidaId">Partida</label>
+    <input id="partidaId" maxlength="50" value="partida-1" />
+    <label for="jugador">Tu jugador</label>
+    <select id="jugador">
+        <option value="X">X</option>
+        <option value="O">O</option>
+    </select>
+    <button id="conectar" type="button">Conectar</button>
+    <button id="nuevaPartida" type="button">Nueva partida</button>
+</section>
+
+<p id="estado" role="status">Conectate a una partida para comenzar.</p>
+<div id="tablero" class="tablero" aria-label="Tablero de TicTacToe"></div>
+
+<h2>Historial de movimientos</h2>
+<ol id="historial"></ol>
+
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/partida.js" asp-append-version="true"></script>
+}
