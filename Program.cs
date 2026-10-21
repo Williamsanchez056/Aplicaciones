@@ -1,17 +1,28 @@
 using Aplicaciones.Hubs;
-using Aplicaciones.Models;
 using Aplicaciones.Services;
+using Aplicaciones.Shared.Contracts;
 using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<PartidaService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ClientPolicy", policy =>
+    {
+        policy
+            .SetIsOriginAllowed(origen =>
+                Uri.TryCreate(origen, UriKind.Absolute, out var uri)
+                && (uri.Port == 5002 || uri.Port == 7002))
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseCors("ClientPolicy");
 
 app.MapPost("/api/Movimientos", async (
     MovimientoRequest request,
@@ -21,7 +32,7 @@ app.MapPost("/api/Movimientos", async (
     try
     {
         var estado = partidaService.AgregarMovimiento(request);
-        await hubContext.Clients.Group(request.PartidaId.Trim())
+        await hubContext.Clients.Group(estado.PartidaId)
             .SendAsync("MovimientoActualizado", estado);
         return Results.Ok(estado);
     }
@@ -54,5 +65,4 @@ app.MapGet("/api/Movimientos/{partidaId}", (
 });
 
 app.MapHub<PartidaHub>("/partidaHub");
-
 app.Run();
