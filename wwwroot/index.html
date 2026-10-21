@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TicTacToe en linea</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/10.0.0/signalr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@10.0.0/dist/browser/signalr.min.js"></script>
   <style>
     body { font-family: Arial, sans-serif; max-width: 720px; margin: 32px auto; padding: 0 16px; color: #202124; }
     .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
@@ -131,7 +131,7 @@
 
     function pintarPartida(partida) {
       partidaActual = partida;
-      const botones = tableroElemento.querySelectorAll("button");
+      const botones = tableroElemento.querySelectorAll("button.casilla");
       partida.tablero.forEach((fila, i) => fila.forEach((valor, j) => {
         const boton = botones[i * 3 + j];
         boton.textContent = valor;
@@ -153,7 +153,7 @@
 
     function pintarVacio() {
       partidaActual = null;
-      tableroElemento.querySelectorAll("button").forEach(boton => {
+      tableroElemento.querySelectorAll("button.casilla").forEach(boton => {
         boton.textContent = "";
         boton.disabled = false;
       });
