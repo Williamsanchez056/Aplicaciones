@@ -25,7 +25,8 @@ document.getElementById("conectar").addEventListener("click", conectar);
 document.getElementById("nuevaPartida").addEventListener("click", async () => {
     if (conexion) await conexion.stop();
     conexion = null;
-    partidaInput.value = "partida-" + crypto.randomUUID().slice(0, 8);
+    const sufijo = Math.random().toString(36).slice(2, 8);
+    partidaInput.value = "partida-" + Date.now().toString(36) + "-" + sufijo;
     limpiarTablero();
     estado.textContent = "Nuevo identificador generado. Comparte el identificador y pulsa Conectar.";
 });
