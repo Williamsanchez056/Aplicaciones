@@ -107,3 +107,20 @@ La API REST recibe y valida cada movimiento. Solo despues de aceptarlo, el servi
 El nombre X/O no es una identidad autenticada. Para produccion, agrega autenticacion y autorizacion para unirse a una partida, persistencia de datos y una politica CORS con origenes exactos. El estado actual vive en memoria y se pierde al reiniciar el servidor.
 
 La captura de pantalla y la demostracion funcional deben realizarse ejecutando el proyecto. No se afirma que las pruebas manuales hayan sido ejecutadas en este entorno.
+
+## Si aparece un error 404 en localhost
+
+Si al ejecutar el proyecto se abre una direccion como `https://localhost:56871` y no aparece el tablero, probablemente se inicio el servidor de la API en lugar del cliente web. La raiz del servidor ahora muestra instrucciones para iniciar el cliente.
+
+Para abrir el tablero, deja el servidor funcionando y ejecuta el cliente en otra terminal desde la carpeta raiz:
+
+```powershell
+dotnet run --project Aplicaciones.Client --urls http://localhost:5002
+```
+
+Despues abre `http://localhost:5002`. En Visual Studio tambien puedes hacer clic derecho sobre `Aplicaciones.Client`, elegir **Establecer como proyecto de inicio** y ejecutar ese proyecto. Si usas dos terminales, inicia tambien el servidor de la API con:
+
+```powershell
+dotnet run --project Aplicaciones.csproj --urls http://localhost:5001
+```
+
